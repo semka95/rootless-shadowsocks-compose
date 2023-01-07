@@ -1,0 +1,17 @@
+[Unit]
+Description=Shadowsocks Rust Rootless Docker Compose Application Service
+Requires=common-compose.service
+After=common-compose.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/semyon/shadowsocks-rust
+Environment="DOCKER_HOST=unix:///run/user/1000/docker.sock"
+ExecStartPre=docker compose down
+ExecStart=docker compose up -d
+ExecStop=docker compose down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  ss-rust:
+    image: teddysun/shadowsocks-rust:alpine-1.15.2
+    restart: always
+    volumes:
+      - ./config:/etc/shadowsocks-rust
+    ports:
+      - 8388:8388
+      - 8388:8388/udp
+    env_file:
+      - ss.env
+    networks:
+      - proxy-tier
+
+networks:
+  proxy-tier:
+    external:
+      name: proxy-tier
